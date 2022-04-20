@@ -1,0 +1,25 @@
+    PreparedStatement pstmt =
+      conn.prepareStatement ("INSERT INTO GRADE_REPORT(Nnumber, sect_num, course_num, letter, grade) " +
+      "VALUES (?, ?, ?, ?, ?)");
+
+    int done = 1;
+
+    while (done != 0) {
+      System.out.println("\nEnter Nnumber: ");
+      int nnumber = getInt();
+      System.out.println("\nEnter section number: ");
+      int sectionnum = getInt();
+      System.out.println("\nEnter course number: ");
+      int coursenum = getInt();
+
+      System.out.println("\nEnter letter grade");
+      String letter = getString();
+      
+      System.out.println("\nEnter student grade: ");
+      int grade = getInt();
+
+      pstmt.setInt(1, nnumber);
+      pstmt.setInt(2, sectionnum);
+      pstmt.setInt(3, coursenum);
+      pstmt.setString(4, letter);
+      pstmt.setInt(5, grade);
