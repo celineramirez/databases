@@ -1,0 +1,25 @@
+    PreparedStatement pstmt =
+      conn.prepareStatement ("INSERT INTO COURSE(Dept_code, Course_num, cName, cLevel, Description) " +
+      "VALUES (?, ?, ?, ?, ?)");
+
+    int done = 1;
+
+    while (done != 0) {
+      System.out.println("\nEnter department code: ");
+      String dcode = getString();
+      System.out.println("\nEnter course number: ");
+      int coursenum = getInt();
+
+      System.out.println("\nEnter course name ");
+      String cName = getString();   //the date is read as a String object in the specified format
+      
+      System.out.println("\nEnter course level: ");
+      int clevel = getInt();
+      System.out.println("\nEnter description: ");
+      String desc = getString();
+
+      pstmt.setString(1, dcode);
+      pstmt.setInt(2, coursenum);
+      pstmt.setString(3, cName);
+      pstmt.setInt(4, clevel);
+      pstmt.setString(5, desc);
