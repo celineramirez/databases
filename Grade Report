@@ -1,0 +1,31 @@
+// Prepare to insert new products in the PRODUCT table
+    PreparedStatement pstmt =
+      conn.prepareStatement ("INSERT INTO STUDENT(Nnumber, Course_number , Section_number ) " +
+      "VALUES (?, ?, ?)");
+
+    int done = 1;
+
+    while (done != 0) {
+      System.out.println("\nEnter Nnumber: ");
+      String Nnumber = getString();
+      System.out.println("\nEnter Course number: ");
+      String Course_number  = getString();
+      System.out.println("\nEnter Section Number: ");
+      String Section_number  = getString();
+      
+      pstmt.setString(1, Nnumber);
+      pstmt.setInt(2, Course_number );
+      pstmt.setInt(3, Lname);
+      
+     
+
+
+
+
+
+
+
+
+
+
+
