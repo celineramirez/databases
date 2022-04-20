@@ -1,0 +1,26 @@
+    PreparedStatement pstmt =
+      conn.prepareStatement ("INSERT INTO DEPARTMENT(DEPT_CODE, DNAME, COLLEGE, OFFICE_PHONE, OFFICE_NUMBER) " +
+      "VALUES (?, ?, ?, ?, ?)");
+
+    int done = 1;
+
+    while (done != 0) {
+      System.out.println("\nEnter department code: ");
+      String dcode = getString();
+      System.out.println("\nEnter department name: ");
+      String dname = getString();
+
+      System.out.println("\nEnter college ");
+      String college = getString();   //the date is read as a String object in the specified format
+//      Date pindate=Date.valueOf(tmppindate); // this converts the String object into a Date object
+      
+      System.out.println("\nEnter office phone: ");
+      int phonenum = getInt();
+      System.out.println("\nEnter office number: ");
+      int officenum = getInt();
+
+      pstmt.setString(1, dcode);
+      pstmt.setString(2, dname);
+      pstmt.setString(3, college);
+      pstmt.setInt(4, phonenum);
+      pstmt.setInt(5, officenum);
