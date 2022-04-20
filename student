@@ -1,0 +1,149 @@
+/*  Example5.java
+ * This sample shows how to insert a tuple to PRODUCT table using
+ * prepared statement. Insert uses column values entered by the user.
+ *
+ * It uses the JDBC THIN driver.
+ */
+
+// You need to import the java.sql package to use JDBC
+import java.sql.*;
+import java.io.*;  
+
+class Example5
+{
+  public static void main (String args [])
+       throws SQLException
+  {
+
+      System.out.print("userid: ");
+      String uid;
+      uid = getString();
+
+      System.out.print("password: ");
+      String pword;
+      pword = getString();
+
+      String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+    // Load the Oracle JDBC driver
+    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+    // Connect to the database
+    Connection conn =
+      DriverManager.getConnection (url, uid, pword);
+
+    // Prepare to insert new products in the PRODUCT table
+    PreparedStatement pstmt =
+      conn.prepareStatement ("INSERT INTO STUDENT(Fname, MI, Lname, Ssn, Nnumber, Birthdate, Sex, Degree, Current_Address, Current_Phone, Perm_Address, Perm_Phone, City, State, Zip, GPA, Major, Minor) " +
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?,?, ? )");
+
+    int done = 1;
+
+    while (done != 0) {
+      System.out.println("\nEnter First Name: ");
+      String Fname = getString();
+      System.out.println("\nEnter Middle: ");
+      String MI = getString();
+      System.out.println("\nEnter Last: ");
+      String Lname = getString();   //the date is read as a String object in the specified format
+      System.out.println("\nEnter SSN ");
+      int Ssn = getInt();
+      System.out.println("\nEnter Nnumber ");
+      int Nnumber = getInt();
+      System.out.println("\nEnter Bdate ");
+      int Birthdate = getFloat();
+      System.out.println("\nEnter Sex "); //Must be a fraction ( <1.0 )
+      String Sex = getFloat();
+      System.out.println("\nEnter Degree: ");
+      String Degree = getInt();
+      System.out.println("\nEnter current address: ");
+      String Current_Address = getInt();
+      System.out.println("\nEnter current phone ");
+      String Current_Phone = getInt();
+      System.out.println("\nEnter perm address ");
+      String Perm_Address = getInt();
+      System.out.println("\nEnter perm phone ");
+      int Perm_Phone = getInt();
+      System.out.println("\nEnter city ");
+      String City = getInt();
+      System.out.println("\nEnter state");
+      String State = getInt();
+      System.out.println("\nEnter zip");
+      int Zip = getInt();
+      System.out.println("\nEnter GPA");
+      int GPA = getInt();
+      System.out.println("\nEnter Major");
+      String Major = getInt();
+      System.out.println("\nEnter Minor");
+      String Minor = getInt();
+      
+      
+      pstmt.setString(1, Fname);
+      pstmt.setString(2, MI);
+      pstmt.setDate(3, Lname);
+      pstmt.setInt(4, Ssn);
+      pstmt.setInt(5, Nnumber);
+      pstmt.setFloat(6, Birthdate);
+      pstmt.setFloat(7, Sex);      
+      pstmt.setString(8, Degree);  
+      pstmt.setString(9, Current_Address);
+      pstmt.setInt(10, Current_Phone);
+      pstmt.setString(11, Perm_Address);
+      pstmt.setInt(12, Perm_Phone);      
+      pstmt.setString(13, City); 
+      pstmt.setString(14, State);
+      pstmt.setInt(15, Zip);      
+      pstmt.setInt(16, GPA); 
+      pstmt.setString(17, Major);
+      pstmt.setString(18, Minor);      
+     
+      int NumRows = pstmt.executeUpdate();
+      System.out.println("\n" + NumRows + " row(s) inserted");
+
+      System.out.println("\nHit 0 for exit, " +
+	     "or enter any other number for another insert: ");
+      done = getInt();
+      } // while done
+    conn.close();
+
+  } // main
+
+ public static String getString() {
+	try {
+	    StringBuffer buffer = new StringBuffer();
+	    int c = System.in.read();
+	    while (c != '\n' && c != -1) {
+		  buffer.append((char)c);
+		  c = System.in.read();
+	    }
+	    return buffer.toString().trim();
+	}
+	catch (IOException e){return "";}
+    }
+
+  public static int getInt() 
+
+  {
+      String s= getString();
+      return Integer.parseInt(s);
+  }
+
+  public static float getFloat() 
+
+  {
+      String s= getString();
+      return Float.parseFloat(s);
+  }
+} // Example5
+
+
+
+
+
+
+
+
+
+
+
+
+
