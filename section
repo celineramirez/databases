@@ -1,0 +1,25 @@
+    PreparedStatement pstmt =
+      conn.prepareStatement ("INSERT INTO SECTION(Sect_num, course_num, Instructor, Semester, sYear) " +
+      "VALUES (?, ?, ?, ?, ?)");
+
+    int done = 1;
+
+    while (done != 0) {
+      System.out.println("\nEnter section number: ");
+      int sect_num = getInt();
+      System.out.println("\nEnter course number: ");
+      int course_num = getInt();
+      System.out.println("\nEnter instructor: ");
+      String instructor = getString();
+
+      System.out.println("\nEnter semester ");
+      String semester = getString();
+      
+      System.out.println("\nEnter semester year: ");
+      int sem_year = getInt();
+
+      pstmt.setInt(1, sect_num);
+      pstmt.setInt(2, sect_num);
+      pstmt.setString(3, instructor);
+      pstmt.setString(4, semester);
+      pstmt.setInt(5, sem_year);
