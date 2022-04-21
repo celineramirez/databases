@@ -280,8 +280,8 @@ class Example5
   
   public static void gradereport(PreparedStatement pstmt, Connection conn) throws SQLException {
 	  pstmt =
-		      conn.prepareStatement ("INSERT INTO GRADE_REPORT(Nnumber, sect_num, course_num, letter, grade) " +
-		      "VALUES (?, ?, ?, ?, ?)");
+		      conn.prepareStatement ("INSERT INTO GRADE_REPORT(Nnumber, sect_num, course_num, letter, grade, gpa) " +
+		      "VALUES (?, ?, ?, ?, ?,?)");
 
 		    int done = 1;
 
@@ -298,12 +298,33 @@ class Example5
 		      
 		      System.out.println("\nEnter student grade: ");
 		      int grade = getInt();
-
+		      
+//		      float gpa = 0;
+//		      
+//		      if (letter == "A" || letter == "a") {
+//		    	  gpa = 4;
+//		      }
+//		      else if (letter == "B" || letter == "b") {
+//		    	  gpa = 3;
+//		      }
+//		      else if (letter == "C" || letter == "c") {
+//		    	  gpa = 2;
+//		      }
+//		      else if (letter == "D" || letter == "d") {
+//		    	  gpa = 1;
+//		      }
+//		      else if (letter == "F" || letter == "f") {
+//		    	  gpa = 0;
+//		      }
+//		      
+//		      gpa/=12;
+		      
 		      pstmt.setInt(1, nnumber);
 		      pstmt.setInt(2, sectionnum);
 		      pstmt.setInt(3, coursenum);
 		      pstmt.setString(4, letter);
 		      pstmt.setInt(5, grade);
+		      pstmt.setFloat(6, gpa);
 	    	      
 	    	      int NumRows = pstmt.executeUpdate();
 		  	      System.out.println("\n" + NumRows + " row(s) inserted");
