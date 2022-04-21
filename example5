@@ -69,44 +69,6 @@ class Example5
     	break;
     }
     
-    
-    
-    
-    // Prepare to insert new products in the PRODUCT table
-
-
-    int done = 1;
-
-    while (done != 0) {
-      System.out.println("\nEnter Nnumber: ");
-      String nnumber = getString();
-      System.out.println("\nEnter section number: ");
-      int sectionnum = getInt();
-      System.out.println("\nEnter course number: ");
-      int coursenum = getInt();
-
-      System.out.println("\nEnter letter grade");
-      String letter = getString();
-      
-      System.out.println("\nEnter student grade: ");
-      int grade = getInt();
-
-      pstmt.setString(1, nnumber);
-      pstmt.setInt(2, sectionnum);
-      pstmt.setInt(3, coursenum);
-      pstmt.setString(4, letter);
-      pstmt.setInt(5, grade);
-
-      
-      int NumRows = pstmt.executeUpdate();
-      System.out.println("\n" + NumRows + " row(s) inserted");
-
-      System.out.println("\nHit 0 for exit, " +
-	     "or enter any other number for another insert: ");
-      done = getInt();
-      } // while done
-    
-
   } // main
 
  public static String getString()  {
