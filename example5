@@ -1,0 +1,383 @@
+/*  Example5.java
+ * This sample shows how to insert a tuple to PRODUCT table using
+ * prepared statement. Insert uses column values entered by the user.
+ *
+ * It uses the JDBC THIN driver.
+ */
+
+// You need to import the java.sql package to use JDBC
+
+package cop3703;
+import java.sql.*;
+import java.util.Scanner;
+import java.io.*;  
+
+class Example5
+{
+  public static void main (String args [])
+       throws SQLException
+  {
+
+      System.out.print("userid: ");
+      String uid;
+      uid = getString();
+
+      System.out.print("password: ");
+      String pword;
+      pword = getString();
+
+      String url = "jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl";
+    // Load the Oracle JDBC driver
+    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+    // Connect to the database
+    Connection conn =
+      DriverManager.getConnection (url, uid, pword);
+
+    // inserts
+    PreparedStatement pstmt =
+    		conn.prepareStatement ("INSERT INTO STUDENT(Fname, MI, Lname, Ssn, Nnumber, Birthdate, Sex, Degree, Current_Address, Current_Phone, Perm_Address, Perm_Phone, City, State, Zip, GPA, Major, Minor) " +
+    		  	      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?,?, ? )");
+    
+    // menu
+    System.out.println("Connected");
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Insert:\n1)Student\n2)Department\n3)Course\n4)Section\n5)Grade Report\n6)Enrolled\nAny other key to close connection");
+    int select = sc.nextInt();
+    switch(select) {
+    case 1:
+    	student(pstmt, conn);
+    	break;
+    case 2:
+    	department(pstmt,conn);
+    	break;
+    case 3:
+    	course(pstmt,conn);
+    	break;
+    case 4:
+    	section(pstmt,conn);
+    	break;
+    case 5:
+    	gradereport(pstmt,conn);
+    	break;
+    case 6:
+    	enrolled(pstmt,conn);
+    	break;
+    default:
+    	System.out.println("closing connection");
+    	conn.close();
+    	break;
+    }
+    
+    
+    
+    
+    // Prepare to insert new products in the PRODUCT table
+
+
+    int done = 1;
+
+    while (done != 0) {
+      System.out.println("\nEnter Nnumber: ");
+      String nnumber = getString();
+      System.out.println("\nEnter section number: ");
+      int sectionnum = getInt();
+      System.out.println("\nEnter course number: ");
+      int coursenum = getInt();
+
+      System.out.println("\nEnter letter grade");
+      String letter = getString();
+      
+      System.out.println("\nEnter student grade: ");
+      int grade = getInt();
+
+      pstmt.setString(1, nnumber);
+      pstmt.setInt(2, sectionnum);
+      pstmt.setInt(3, coursenum);
+      pstmt.setString(4, letter);
+      pstmt.setInt(5, grade);
+
+      
+      int NumRows = pstmt.executeUpdate();
+      System.out.println("\n" + NumRows + " row(s) inserted");
+
+      System.out.println("\nHit 0 for exit, " +
+	     "or enter any other number for another insert: ");
+      done = getInt();
+      } // while done
+    
+
+  } // main
+
+ public static String getString()  {
+	try {
+	    StringBuffer buffer = new StringBuffer();
+	    int c = System.in.read();
+	    while (c != '\n' && c != -1) {
+		  buffer.append((char)c);
+		  c = System.in.read();
+	    }
+	    return buffer.toString().trim();
+	}
+	catch (IOException e){return "";}
+    }
+
+  public static int getInt() 
+
+  {
+      String s= getString();
+      return Integer.parseInt(s);
+  }
+
+  public static float getFloat() 
+
+  {
+      String s= getString();
+      return Float.parseFloat(s);
+  }
+  
+  public static void student(PreparedStatement pstmt, Connection conn) throws SQLException {
+	    pstmt = conn.prepareStatement ("INSERT INTO STUDENT(Fname, MI, Lname, Ssn, Nnumber, Birthdate, Sex, Degree, Current_Address, Current_Phone, Perm_Address, Perm_Phone, City, State, Zip, GPA, Major, Minor) " +
+	  	      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?,?, ? )");
+
+	  	    int done = 1;
+
+	  	    while (done != 0) {
+	  	      System.out.println("\nEnter First Name: ");
+	  	      String Fname = getString();
+	  	      System.out.println("\nEnter Middle: ");
+	  	      String MI = getString();
+	  	      System.out.println("\nEnter Last: ");
+	  	      String Lname = getString();   //the date is read as a String object in the specified format
+	  	      System.out.println("\nEnter SSN ");
+	  	      int Ssn = getInt();
+	  	      System.out.println("\nEnter Nnumber ");
+	  	      int Nnumber = getInt();
+	  	      System.out.println("\nEnter Bdate ");
+	  	      int Birthdate = getInt();
+	  	      System.out.println("\nEnter Sex "); //Must be a fraction ( <1.0 )
+	  	      String Sex = getString();
+	  	      System.out.println("\nEnter Degree: ");
+	  	      String Degree = getString();
+	  	      System.out.println("\nEnter current address: ");
+	  	      String Current_Address = getString();
+	  	      System.out.println("\nEnter current phone ");
+	  	      String Current_Phone = getString();
+	  	      System.out.println("\nEnter perm address ");
+	  	      String Perm_Address = getString();
+	  	      System.out.println("\nEnter perm phone ");
+	  	      int Perm_Phone = getInt();
+	  	      System.out.println("\nEnter city ");
+	  	      String City = getString();
+	  	      System.out.println("\nEnter state");
+	  	      String State = getString();
+	  	      System.out.println("\nEnter zip");
+	  	      int Zip = getInt();
+	  	      System.out.println("\nEnter GPA");
+	  	      int GPA = getInt();
+	  	      System.out.println("\nEnter Major");
+	  	      String Major = getString();
+	  	      System.out.println("\nEnter Minor");
+	  	      String Minor = getString();
+	  	      
+	  	      
+	  	    pstmt.setString(1, Fname);
+	  	  pstmt.setString(2, MI);
+	  	pstmt.setString(3, Lname);
+	  	pstmt.setInt(4, Ssn);
+	  	pstmt.setInt(5, Nnumber);
+	  	pstmt.setFloat(6, Birthdate);
+	  	pstmt.setString(7, Sex);      
+	  	pstmt.setString(8, Degree);  
+	  	pstmt.setString(9, Current_Address);
+	  	pstmt.setString(10, Current_Phone);
+	  	pstmt.setString(11, Perm_Address);
+	  	pstmt.setInt(12, Perm_Phone);      
+	  	pstmt.setString(13, City); 
+	  	pstmt.setString(14, State);
+	  	pstmt.setInt(15, Zip);      
+	  	pstmt.setInt(16, GPA); 
+	  	pstmt.setString(17, Major);
+	  	pstmt.setString(18, Minor);      
+	  	     
+	  	      int NumRows = pstmt.executeUpdate();
+	  	      System.out.println("\n" + NumRows + " row(s) inserted");
+
+	  	      System.out.println("\nHit 0 for exit, " +
+	  		     "or enter any other number for another insert: ");
+	  	      done = getInt();
+	  	      } // while done
+	}// student
+  
+  public static void department(PreparedStatement pstmt, Connection conn) throws SQLException {
+	    pstmt =
+	    	      conn.prepareStatement ("INSERT INTO DEPARTMENT(DEPT_CODE, DNAME, COLLEGE, OFFICE_PHONE, OFFICE_NUMBER) " +
+	    	      "VALUES (?, ?, ?, ?, ?)");
+
+	    	    int done = 1;
+
+	    	    while (done != 0) {
+	    	      System.out.println("\nEnter department code: ");
+	    	      String dcode = getString();
+	    	      System.out.println("\nEnter department name: ");
+	    	      String dname = getString();
+
+	    	      System.out.println("\nEnter college ");
+	    	      String college = getString();
+	    	      
+	    	      System.out.println("\nEnter office phone: ");
+	    	      int phonenum = getInt();
+	    	      System.out.println("\nEnter office number: ");
+	    	      int officenum = getInt();
+
+	    	      pstmt.setString(1, dcode);
+	    	      pstmt.setString(2, dname);
+	    	      pstmt.setString(3, college);
+	    	      pstmt.setInt(4, phonenum);
+	    	      pstmt.setInt(5, officenum);
+	    	      
+	    	      int NumRows = pstmt.executeUpdate();
+		  	      System.out.println("\n" + NumRows + " row(s) inserted");
+
+		  	      System.out.println("\nHit 0 for exit, " +
+		  		     "or enter any other number for another insert: ");
+		  	      done = getInt();
+  }
+  }// department
+  
+  public static void course(PreparedStatement pstmt, Connection conn) throws SQLException {
+  pstmt = conn.prepareStatement ("INSERT INTO COURSE(Dept_code, Course_num, cName, cLevel, Description) " +
+	      "VALUES (?, ?, ?, ?, ?)");
+
+	    int done = 1;
+
+	    while (done != 0) {
+	      System.out.println("\nEnter department code: ");
+	      String dcode = getString();
+	      System.out.println("\nEnter course number: ");
+	      int coursenum = getInt();
+
+	      System.out.println("\nEnter course name ");
+	      String cName = getString();   //the date is read as a String object in the specified format
+	      
+	      System.out.println("\nEnter course level: ");
+	      int clevel = getInt();
+	      System.out.println("\nEnter description: ");
+	      String desc = getString();
+
+	      pstmt.setString(1, dcode);
+	      pstmt.setInt(2, coursenum);
+	      pstmt.setString(3, cName);
+	      pstmt.setInt(4, clevel);
+	      pstmt.setString(5, desc);
+	      
+	      int NumRows = pstmt.executeUpdate();
+  	      System.out.println("\n" + NumRows + " row(s) inserted");
+
+  	      System.out.println("\nHit 0 for exit, " +
+  		     "or enter any other number for another insert: ");
+  	      done = getInt();
+	    }
+  }// course
+  
+  public static void section(PreparedStatement pstmt, Connection conn) throws SQLException {
+	    pstmt =
+	    	      conn.prepareStatement ("INSERT INTO SECTION(Sect_num, course_num, Instructor, Semester, sYear) " +
+	    	      "VALUES (?, ?, ?, ?, ?)");
+
+	    	    int done = 1;
+
+	    	    while (done != 0) {
+	    	      System.out.println("\nEnter section number: ");
+	    	      int sect_num = getInt();
+	    	      System.out.println("\nEnter course number: ");
+	    	      int course_num = getInt();
+	    	      System.out.println("\nEnter instructor: ");
+	    	      String instructor = getString();
+
+	    	      System.out.println("\nEnter semester ");
+	    	      String semester = getString();
+	    	      
+	    	      System.out.println("\nEnter semester year: ");
+	    	      int sem_year = getInt();
+
+	    	      pstmt.setInt(1, sect_num);
+	    	      pstmt.setInt(2, sect_num);
+	    	      pstmt.setString(3, instructor);
+	    	      pstmt.setString(4, semester);
+	    	      pstmt.setInt(5, sem_year);
+	    	      
+	    	      int NumRows = pstmt.executeUpdate();
+		  	      System.out.println("\n" + NumRows + " row(s) inserted");
+
+		  	      System.out.println("\nHit 0 for exit, " +
+		  		     "or enter any other number for another insert: ");
+		  	      done = getInt();
+	    	    }
+  } //section
+  
+  public static void gradereport(PreparedStatement pstmt, Connection conn) throws SQLException {
+	  pstmt =
+		      conn.prepareStatement ("INSERT INTO GRADE_REPORT(Nnumber, sect_num, course_num, letter, grade) " +
+		      "VALUES (?, ?, ?, ?, ?)");
+
+		    int done = 1;
+
+		    while (done != 0) {
+		      System.out.println("\nEnter Nnumber: ");
+		      int nnumber = getInt();
+		      System.out.println("\nEnter section number: ");
+		      int sectionnum = getInt();
+		      System.out.println("\nEnter course number: ");
+		      int coursenum = getInt();
+
+		      System.out.println("\nEnter letter grade");
+		      String letter = getString();
+		      
+		      System.out.println("\nEnter student grade: ");
+		      int grade = getInt();
+
+		      pstmt.setInt(1, nnumber);
+		      pstmt.setInt(2, sectionnum);
+		      pstmt.setInt(3, coursenum);
+		      pstmt.setString(4, letter);
+		      pstmt.setInt(5, grade);
+	    	      
+	    	      int NumRows = pstmt.executeUpdate();
+		  	      System.out.println("\n" + NumRows + " row(s) inserted");
+
+		  	      System.out.println("\nHit 0 for exit, " +
+		  		     "or enter any other number for another insert: ");
+		  	      done = getInt();
+	    	    }
+} //gradereport
+  
+  public static void enrolled(PreparedStatement pstmt, Connection conn) throws SQLException {
+	  pstmt =
+		      conn.prepareStatement ("INSERT INTO STUDENT(Nnumber, Course_number , Section_number ) " +
+		      "VALUES (?, ?, ?)");
+
+		    int done = 1;
+
+		    while (done != 0) {
+		      System.out.println("\nEnter Nnumber: ");
+		      String Nnumber = getString();
+		      System.out.println("\nEnter Course number: ");
+		      int Course_number  = getInt();
+		      System.out.println("\nEnter Section Number: ");
+		      int Section_number  = getInt();
+		      
+		      pstmt.setString(1, Nnumber);
+		      pstmt.setInt(2, Course_number );
+		      pstmt.setInt(3, Section_number);
+	    	      
+	    	      int NumRows = pstmt.executeUpdate();
+		  	      System.out.println("\n" + NumRows + " row(s) inserted");
+
+		  	      System.out.println("\nHit 0 for exit, " +
+		  		     "or enter any other number for another insert: ");
+		  	      done = getInt();
+	    	    }
+} //enrolled
+  
+} // Example5
