@@ -1,0 +1,35 @@
+	// Create a Statement
+
+    Statement stmt = conn.createStatement ();
+    
+    int Nnumber;
+    System.out.println("\nEnter Nnumber for student");
+    Nnumber = sc.nextInt();
+
+      String q = "SELECT * " + "FROM Grade_Report " + "WHERE Nnumber = " + Nnumber;
+      
+      ResultSet rset = stmt.executeQuery(q);
+
+      // Display result
+      while (rset.next ()) {
+        String Nnumber = rset.getString("Nnumber");
+        Int Section_number  = rset.getInt("Section_number");
+        Int Course_number  = rset.getInt("Course_number");
+        String Letter = rset.getString("Letter");   
+        Int Grade = rset.getInt("Grade");
+        System.out.println (Nnumber + ":" + Section_number + ":" + 
+        		Course_number + ":" + Letter + ":" + Grade + ":" );
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
