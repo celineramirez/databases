@@ -1,0 +1,36 @@
+	// Create a Statement
+
+    Statement stmt = conn.createStatement ();
+    
+    int dept;
+    System.out.println("\nEnter depatment number to display all courses offered");
+    dept = sc.nextInt();
+
+      String q = "SELECT * " + "FROM Course " + "WHERE Department_Code = " + dept;
+      
+      ResultSet rset = stmt.executeQuery(q);
+
+      // Display result
+      while (rset.next ()) {
+        String Department_code = rset.getString("Department_code");
+        Int Course_number  = rset.getInt("Course_number");
+        String cName = rset.getString("cName");
+        int cLevel = rset.getInt("cLevel");   
+        String Description = rset.getString("Description");
+        int Semester_hours  = rset.getInt("Semester_hours");
+        System.out.println (Department_code + ":" + Course_number + ":" + 
+        		cName + ":" + cLevel + ":" + Description + ":" + Semester_hours);
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
